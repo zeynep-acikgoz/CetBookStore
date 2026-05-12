@@ -27,7 +27,7 @@
                 <div class="mb-2">
                     @if (!string.IsNullOrEmpty(Model.ImageUrl))
                     {
-                        <img src="@Model.ImageUrl" alt="Current Book Image" style="max-width: 200px; border: 1px solid #ccc; padding: 2px;" />
+                        <img id="imagePreview" src="/images/@Model.ImageUrl" alt="Current Book Image" style="max-width: 200px; border: 1px solid #ccc; padding: 2px;" />
                     }
                     else
                     {
@@ -63,8 +63,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
+                <input asp-for="Price" type="text" value="@Model.Price.ToString("G29")" class="form-control" />                <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
@@ -73,8 +72,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="PreviousPrice" class="control-label"></label>
-                <input asp-for="PreviousPrice" class="form-control" />
-                <span asp-validation-for="PreviousPrice" class="text-danger"></span>
+                <input asp-for="Price" type="text" value="@Model.Price.ToString("G29")" class="form-control" />                <span asp-validation-for="PreviousPrice" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PublicationDate" class="control-label"></label>
@@ -102,6 +100,23 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        document.querySelector('input[name="ImageFile"]').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const preview = document.getElementById('imagePreview');
+                    if(preview) {
+                        preview.setAttribute('src', event.target.result);
+                    }
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
 }

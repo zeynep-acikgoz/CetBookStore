@@ -3,12 +3,11 @@
 
 <div class="col-md-4">
     <div class="card">
-        <img src="~/images/@(Model.ImageUrl??"default.jpeg")" class="card-img-top" alt="Product Image">
-        <div class="card-body">
+        <img src="/images/@Model.ImageUrl" class="card-img-top" style="height: 300px; object-fit: contain; background-color: #f8f9fa; padding: 10px;" alt="@Model.Title">        <div class="card-body">
             <h5 class="card-title">@Model.Title</h5>
             <p class="card-text">@Model.Author </p>
             <div class="d-flex justify-content-between align-items-center">
-                <span class="h5 mb-0">@Model.Price.ToString("G")</span>
+                <span class="h5 mb-0">@Model.Price.ToString("G29")</span>
             </div>
         </div>
         <div class="card-footer d-flex justify-content-between bg-light">
