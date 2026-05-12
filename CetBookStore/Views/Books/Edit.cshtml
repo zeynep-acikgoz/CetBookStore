@@ -10,14 +10,37 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+            
+            <input type="hidden" asp-for="ImageUrl" />
+
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label class="control-label">Current Image</label>
+                <div class="mb-2">
+                    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                    {
+                        <img src="@Model.ImageUrl" alt="Current Book Image" style="max-width: 200px; border: 1px solid #ccc; padding: 2px;" />
+                    }
+                    else
+                    {
+                        <span class="text-muted">No image available.</span>
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Upload New Image (Optional)</label>
+                <input type="file" name="ImageFile" class="form-control" accept="image/*" />
+            </div>
+
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
                 <input asp-for="Description" class="form-control" />
@@ -68,7 +91,7 @@
                 <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mt-3">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
